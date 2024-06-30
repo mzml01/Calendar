@@ -19,10 +19,13 @@ public class CalendarServiceImpl implements CalendarService{
         return calendarDAO.findAll();
     }
 
+    @Override
+    public Calendar getCalendarById(int date, int month, int year) {
+        int id=(year*10000)+(month*100)+date;
+        System.out.println(id);
+        System.out.println(calendarDAO.findById(id).get());
+        return calendarDAO.findById(id).get();
+    }
 
-//    @Override
-//    public Calendar getEvent(LocalDate date) {
-//        return calendarDAO.findById(date);
-//    }
 
 }

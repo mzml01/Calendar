@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface CalendarDAO extends JpaRepository<Calendar, Integer> {
 
-//    Calendar findById(LocalDate date);
 }
