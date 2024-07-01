@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Leave Log</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        .error {color:red}
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h4>Update Calendar</h4>
+        <hr>
+        <form  action="#"  th:action="@{/LeaveLog/save}" th:object="${calendar}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+        <input type="text" th:field="*{day}" class="form-control mb-4 w-25" placeholder="day">
+        <span th:if="${#fields.hasErrors('day')}" th:errors="*{day}" class="error">Day Error</span>
+        <input type="text" th:field="*{date}" class="form-control mb-4 w-25" placeholder="date">
+        <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}" class="error">Date Error</span>
+        <input type="text" th:field="*{event}" class="form-control mb-4 w-25" placeholder="event">
+        <span th:if="${#fields.hasErrors('event')}" th:errors="*{event}" class="error">Event Error</span>
+        <input type="text" th:field="*{dayOrder}" class="form-control mb-4 w-25" placeholder="dayOrder">
+        <span th:if="${#fields.hasErrors('dayOrder')}" th:errors="*{dayOrder}" class="error">Day Order Error</span>
+        <button type="submit" class="btn btn-primary">Update Calendar</button>
+    </form>
+    </div>
+
+
+</body>
+</html>

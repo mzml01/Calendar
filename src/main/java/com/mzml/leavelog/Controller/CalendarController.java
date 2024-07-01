@@ -49,5 +49,35 @@ public class CalendarController {
             return "calendar-list";
         }
     }
+    @GetMapping("/showFormForUpdate")
+    public String showFormForUpdate(Model theModel){
+        CalendarForm calendarForm = new CalendarForm();
+        theModel.addAttribute("calendarForm", calendarForm);
+        return "update-form";
+    }
+    @PostMapping("/update")
+    public String updateForm(@Valid @ModelAttribute("calendarForm") CalendarForm calendarForm,
+                             BindingResult bindingResult, Model theModel){
+        if (bindingResult.hasErrors()) {
+            return "update-form";
+        }
+        try {
+            int date = Integer.parseInt(calendarForm.getDate());
+            int month = Integer.parseInt(calendarForm.getMonth());
+            int year = Integer.parseInt(calendarForm.getYear());
+
+            Calendar calendar = calendarService.getCalendarById(date, month, year);
+            theModel.addAttribute("calendar", calendar);
+            return "update-details";
+        } catch (NumberFormatException e) {
+            theModel.addAttribute("errorMessage", "Date, month, and year must be integers.");
+            return "update-form";
+        }
+    }
+    @PostMapping("/save")
+    public String saveForm(@ModelAttribute("calendar") Calendar calendar,Model theModel){
+        calendarService.update(calendar);
+        return "redirect:/LeaveLog/calendar";
+    }
 
 }
