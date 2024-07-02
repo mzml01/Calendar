@@ -1,6 +1,7 @@
 package com.mzml.leavelog.Controller;
 
 import com.mzml.leavelog.DTO.CalendarForm;
+import com.mzml.leavelog.DTO.CalendarSchedule;
 import com.mzml.leavelog.Entity.Calendar;
 import com.mzml.leavelog.Service.CalendarServiceImpl;
 import jakarta.validation.Valid;
@@ -78,6 +79,26 @@ public class CalendarController {
     public String saveForm(@ModelAttribute("calendar") Calendar calendar,Model theModel){
         calendarService.update(calendar);
         return "redirect:/LeaveLog/calendar";
+    }
+    @GetMapping("/showFormForSchedule")
+    public String showFormForSchedule(Model theModel){
+        CalendarSchedule calendarSchedule = new CalendarSchedule();
+        theModel.addAttribute("calendarSchedule", calendarSchedule);
+        return "schedule-form";
+    }
+    @PostMapping("/scheduleDetails")
+    public String scheduleDetails(@ModelAttribute("calendarForm") CalendarSchedule calendarForm,
+                                  Model theModel){
+            int startDate = Integer.parseInt(calendarForm.getStartDate());
+            int endDate = Integer.parseInt(calendarForm.getEndDate());
+            int startMonth = Integer.parseInt(calendarForm.getStartMonth());
+            int startYear = Integer.parseInt(calendarForm.getStartYear());
+
+
+            List<Calendar> calendars = calendarService.getCalendarSpans(startDate, endDate, startMonth, startYear);
+            theModel.addAttribute("calendar2", calendars);
+            return "schedule-details";
+
     }
 
 }
