@@ -6,7 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
-        .error {color:red}
+        .error { color: red; }
+        .container { margin-top: 20px; }
+        h4, h3 { margin-bottom: 20px; }
+        .form-control { max-width: 300px; }
+        .btn-custom { margin-top: 10px; }
+        .table-container { margin-top: 40px; }
+        .table th, .table td { text-align: center; vertical-align: middle; }
+        .table th { background-color: #343a40; color: white; }
+        .table-hover tbody tr:hover { background-color: #f1f1f1; }
     </style>
 </head>
 <body>
@@ -14,31 +22,38 @@
     <h4>Find Day</h4>
     <hr>
     <form th:action="@{/LeaveLog/day}" th:object="${calendarForm}" method="POST">
-        <input type="text" th:field="*{date}" class="form-control mb-4 w-25" placeholder="date">
-        <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}" class="error">Date Error</span>
-        <input type="text" th:field="*{month}" class="form-control mb-4 w-25" placeholder="month">
-        <span th:if="${#fields.hasErrors('month')}" th:errors="*{month}" class="error">Month Error</span>
-        <input type="text" th:field="*{year}" class="form-control mb-4 w-25" placeholder="year">
-        <span th:if="${#fields.hasErrors('year')}" th:errors="*{year}" class="error">Year Error</span>
-        <button type="submit" class="btn btn-primary">Find Calendar</button>
+        <div class="mb-3">
+            <input type="text" th:field="*{date}" class="form-control" placeholder="Date">
+            <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}" class="error">Date Error</span>
+        </div>
+        <div class="mb-3">
+            <input type="text" th:field="*{month}" class="form-control" placeholder="Month">
+            <span th:if="${#fields.hasErrors('month')}" th:errors="*{month}" class="error">Month Error</span>
+        </div>
+        <div class="mb-3">
+            <input type="text" th:field="*{year}" class="form-control" placeholder="Year">
+            <span th:if="${#fields.hasErrors('year')}" th:errors="*{year}" class="error">Year Error</span>
+        </div>
+        <button type="submit" class="btn btn-primary btn-custom">Find Calendar</button>
     </form>
 </div>
+
 <div class="container">
     <h4>Update Calendar</h4>
     <hr>
-    <a th:href="@{/LeaveLog/showFormForUpdate}"
-       class="btn btn-primary btn-sm mb-3">Update Calendar</a>
+    <a th:href="@{/LeaveLog/showFormForUpdate}" class="btn btn-primary btn-sm mb-3">Update Calendar</a>
 </div>
+
 <div class="container">
-    <h4>Schedule[StartDate - EndDate]</h4>
+    <h4>Schedule [StartDate - EndDate]</h4>
     <hr>
-    <a th:href="    @{/LeaveLog/showFormForSchedule}"
-       class="btn btn-primary btn-sm mb-3">Get Schedule</a>
+    <a th:href="@{/LeaveLog/showFormForSchedule}" class="btn btn-primary btn-sm mb-3">Get Schedule</a>
 </div>
-    <div class="container">
-        <h3> Calendar</h3>
-    <table class="table table-bordered table-striped">
-        <thead class="table-dark">
+
+<div class="container table-container">
+    <h3>Calendar</h3>
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
         <tr>
             <th>Day</th>
             <th>Date</th>
@@ -48,14 +63,15 @@
         </thead>
         <tbody>
         <tr th:each="tempCalendar : ${calendar}">
-            <td th:text="${tempCalendar.day}" />
-            <td th:text="${tempCalendar.date}" />
-            <td th:text="${tempCalendar.event}" />
-            <td th:text="${tempCalendar.dayOrder}" />
+            <td th:text="${tempCalendar.day}"></td>
+            <td th:text="${tempCalendar.date}"></td>
+            <td th:text="${tempCalendar.event}"></td>
+            <td th:text="${tempCalendar.dayOrder}"></td>
         </tr>
         </tbody>
     </table>
-    </div>
+</div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+9w7qLrP6E0zZBseysU3f+2Aa7yln" crossorigin="anonymous"></script>
 </body>
 </html>

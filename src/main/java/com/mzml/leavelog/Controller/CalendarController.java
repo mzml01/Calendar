@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -54,13 +53,13 @@ public class CalendarController {
     public String showFormForUpdate(Model theModel){
         CalendarForm calendarForm = new CalendarForm();
         theModel.addAttribute("calendarForm", calendarForm);
-        return "update-form";
+        return "UpdateFiles/update-form";
     }
     @PostMapping("/update")
     public String updateForm(@Valid @ModelAttribute("calendarForm") CalendarForm calendarForm,
                              BindingResult bindingResult, Model theModel){
         if (bindingResult.hasErrors()) {
-            return "update-form";
+            return "UpdateFiles/update-form";
         }
         try {
             int date = Integer.parseInt(calendarForm.getDate());
@@ -69,16 +68,16 @@ public class CalendarController {
 
             Calendar calendar = calendarService.getCalendarById(date, month, year);
             theModel.addAttribute("calendar", calendar);
-            return "update-details";
+            return "UpdateFiles/update-details";
         } catch (NumberFormatException e) {
             theModel.addAttribute("errorMessage", "Date, month, and year must be integers.");
-            return "update-form";
+            return "UpdateFiles/update-form";
         }
     }
     @PostMapping("/save")
     public String saveForm(@ModelAttribute("calendar") Calendar calendar,Model theModel){
         calendarService.update(calendar);
-        return "redirect:/LeaveLog/calendar";
+        return "UpdateFiles/update-success";
     }
     @GetMapping("/showFormForSchedule")
     public String showFormForSchedule(Model theModel){
