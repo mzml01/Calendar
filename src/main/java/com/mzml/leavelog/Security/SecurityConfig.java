@@ -1,5 +1,7 @@
 package com.mzml.leavelog.Security;
 
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,17 +13,34 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
+    @Value("${user1.username}")
+    private String user1Username;
+
+    @Value("${user1.password}")
+    private String user1Password;
+
+    @Value("${user1.roles}")
+    private String user1Roles;
+
+    @Value("${user2.username}")
+    private String user2Username;
+
+    @Value("${user2.password}")
+    private String user2Password;
+
+    @Value("${user2.roles}")
+    private String user2Roles;
     @Bean
     public InMemoryUserDetailsManager inMemoryUserDetailsManager(){
         UserDetails user1= User.builder().
-                username("388").
-                password("{noop}test388").
-                roles("ADMIN").
+                username(user1Username).
+                password(user1Password).
+                roles(user1Roles).
                 build();
         UserDetails user2= User.builder().
-                username("428").
-                password("{noop}test428").
-                roles("STUDENT").
+                username(user2Username).
+                password(user2Password).
+                roles(user2Roles).
                 build();
         return new InMemoryUserDetailsManager(user1,user2);
     }
